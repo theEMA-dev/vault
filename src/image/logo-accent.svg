@@ -1,0 +1,11 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg width="800px" height="800px" viewBox="0 0 16.00 16.00" xmlns="http://www.w3.org/2000/svg" fill="#ff0149" stroke="#cacaca" stroke-width="0.00016">
+
+<g stroke-width="0"/>
+
+<g stroke-linecap="round" stroke-linejoin="round" stroke="#ff0149" stroke-width="0.128"/>
+
+<g> <path d="M0 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm9 0a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V1zm0 9a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-5z"/> </g>
+
+</svg>

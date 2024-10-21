@@ -29,7 +29,7 @@ class GridComponent extends LitElement {
       flex-direction: column;
       justify-content: center;
       aspect-ratio: 2/3;
-      background-color: var(--hx-background-alpha);
+      background-color: var(--hx-background-alpha-100);
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       border: 1px solid var(--hx-border-100);
@@ -54,7 +54,7 @@ class GridComponent extends LitElement {
       left: 0;
       width: 100%;
       height: 100%;
-      background: var(--hx-background-alpha);
+      background: var(--hx-background-alpha-100);
       backdrop-filter: blur(10px);
       webkit-backdrop-filter: blur(10px);
       display: flex;
@@ -119,13 +119,58 @@ class GridComponent extends LitElement {
         background-position: -200% 0;
       }
     }
+    .error-container {
+      color: var(--hx-red-500);
+      position: absolute;
+      z-index: 1;
+    }
+    .error-container p {
+      color: var(--hx-text-100);
+      text-align: center;
+    }
   `;
 
   // ASSET GENERATE LINE (DO NOT DELETE THIS LINE)
   assets: Asset[] = [
   {
-    "id": 35,
-    "src": "asset/grid/thumbnail/35.jpg",
+    "id": 40,
+    "src": "asset/grid/thumbnail/40.jpg",
+    "title": "Map Labs Collection",
+    "release": "2021",
+    "author": "Map Labs Team",
+    "resolution": "1200x1800",
+    "attributes": [
+      "collection"
+    ],
+    "tags": [
+      "black"
+    ]
+  },
+  {
+    "id": 39,
+    "src": "asset/grid/thumbnail/39.jpg",
+    "title": "Dark Echo",
+    "release": "2015",
+    "author": "Moofy",
+    "resolution": "1200x1800",
+    "tags": [
+      "black"
+    ]
+  },
+  {
+    "id": 38,
+    "src": "asset/grid/thumbnail/38.jpg",
+    "title": "JOLT: Super Robot Racer",
+    "release": "2016",
+    "author": "Moofy",
+    "resolution": "1000x1500",
+    "tags": [
+      "blue"
+    ]
+  },
+  {
+    "id": 37,
+    "src": "asset/grid/thumbnail/37.jpg",
     "title": "High Strangeness",
     "release": "2015",
     "author": "Moofy",
@@ -138,8 +183,8 @@ class GridComponent extends LitElement {
     ]
   },
   {
-    "id": 34,
-    "src": "asset/grid/thumbnail/34.jpg",
+    "id": 36,
+    "src": "asset/grid/thumbnail/36.jpg",
     "title": "FAST Racing Neo",
     "release": "2015",
     "author": "Moofy",
@@ -152,8 +197,8 @@ class GridComponent extends LitElement {
     ]
   },
   {
-    "id": 33,
-    "src": "asset/grid/thumbnail/33.jpg",
+    "id": 35,
+    "src": "asset/grid/thumbnail/35.jpg",
     "title": "Starblast",
     "release": "2017",
     "author": "theEMA",
@@ -163,8 +208,8 @@ class GridComponent extends LitElement {
     ]
   },
   {
-    "id": 32,
-    "src": "asset/grid/thumbnail/32.jpg",
+    "id": 34,
+    "src": "asset/grid/thumbnail/34.jpg",
     "title": "Cyberpunk 2077",
     "release": "2020",
     "author": "theEMA",
@@ -175,8 +220,8 @@ class GridComponent extends LitElement {
     ]
   },
   {
-    "id": 31,
-    "src": "asset/grid/thumbnail/31.jpg",
+    "id": 33,
+    "src": "asset/grid/thumbnail/33.jpg",
     "title": "Hollow Knight: Silksong",
     "release": "TBA",
     "author": "theEMA",
@@ -184,8 +229,8 @@ class GridComponent extends LitElement {
     "tags": []
   },
   {
-    "id": 30,
-    "src": "asset/grid/thumbnail/30.jpg",
+    "id": 32,
+    "src": "asset/grid/thumbnail/32.jpg",
     "title": "Zork Nemesis: The Forbidden Lands",
     "release": "2019",
     "author": "Moofy",
@@ -193,8 +238,8 @@ class GridComponent extends LitElement {
     "tags": []
   },
   {
-    "id": 29,
-    "src": "asset/grid/thumbnail/29.jpg",
+    "id": 31,
+    "src": "asset/grid/thumbnail/31.jpg",
     "title": "ACE COMBAT™ 7: SKIES UNKNOWN",
     "release": "2019",
     "author": "theEMA",
@@ -205,8 +250,8 @@ class GridComponent extends LitElement {
     "tags": []
   },
   {
-    "id": 28,
-    "src": "asset/grid/thumbnail/28.jpg",
+    "id": 30,
+    "src": "asset/grid/thumbnail/30.jpg",
     "title": "ACE COMBAT™ 7: SKIES UNKNOWN",
     "release": "2019",
     "author": "theEMA",
@@ -214,6 +259,24 @@ class GridComponent extends LitElement {
     "attributes": [
       "multi"
     ],
+    "tags": []
+  },
+  {
+    "id": 29,
+    "src": "asset/grid/thumbnail/29.jpg",
+    "title": "Ancestors: The Humankind Odyssey",
+    "release": "2020",
+    "author": "theEMA",
+    "resolution": "1200x1800",
+    "tags": []
+  },
+  {
+    "id": 28,
+    "src": "asset/grid/thumbnail/28.jpg",
+    "title": "Ancestors: The Humankind Odyssey",
+    "release": "2020",
+    "author": "theEMA",
+    "resolution": "1200x1800",
     "tags": []
   },
   {
@@ -228,60 +291,58 @@ class GridComponent extends LitElement {
   {
     "id": 26,
     "src": "asset/grid/thumbnail/26.jpg",
-    "title": "Ancestors: The Humankind Odyssey",
-    "release": "2020",
-    "author": "theEMA",
+    "title": "Overwolf",
+    "release": "2021",
+    "author": "Moofy",
     "resolution": "1200x1800",
     "tags": []
   },
   {
     "id": 25,
     "src": "asset/grid/thumbnail/25.jpg",
-    "title": "Ancestors: The Humankind Odyssey",
-    "release": "2020",
-    "author": "theEMA",
+    "title": "Overwolf",
+    "release": "2021",
+    "author": "Moofy",
     "resolution": "1200x1800",
     "tags": []
   },
   {
     "id": 24,
     "src": "asset/grid/thumbnail/24.jpg",
-    "title": "Overwolf",
-    "release": "2021",
-    "author": "Moofy",
-    "resolution": "1200x1800",
-    "tags": []
-  },
-  {
-    "id": 23,
-    "src": "asset/grid/thumbnail/23.jpg",
-    "title": "Overwolf",
-    "release": "2021",
-    "author": "Moofy",
-    "resolution": "1200x1800",
-    "tags": []
-  },
-  {
-    "id": 22,
-    "src": "asset/grid/thumbnail/22.jpg",
     "title": "LEGO® The Hobbit™",
     "release": "2014",
     "author": "theEMA",
     "resolution": "1200x1800",
+    "tags": [
+      "collection:lego"
+    ]
+  },
+  {
+    "id": 23,
+    "src": "asset/grid/thumbnail/23.jpg",
+    "title": "Template for Lego Collection",
+    "release": "2021",
+    "author": "theEMA",
+    "resolution": "1200x1800",
+    "tags": [
+      "collection:lego"
+    ]
+  },
+  {
+    "id": 22,
+    "src": "asset/grid/thumbnail/22.jpg",
+    "title": "Lego Collection",
+    "release": "2021",
+    "author": "theEMA",
+    "resolution": "1200x1800",
+    "attributes": [
+      "collection"
+    ],
     "tags": []
   },
   {
     "id": 21,
     "src": "asset/grid/thumbnail/21.jpg",
-    "title": "Template for Lego Collection",
-    "release": "2021",
-    "author": "theEMA",
-    "resolution": "1200x1800",
-    "tags": []
-  },
-  {
-    "id": 20,
-    "src": "asset/grid/thumbnail/20.jpg",
     "title": "Fall Guys",
     "release": "2020",
     "author": "theEMA",
@@ -289,8 +350,8 @@ class GridComponent extends LitElement {
     "tags": []
   },
   {
-    "id": 19,
-    "src": "asset/grid/thumbnail/19.jpg",
+    "id": 20,
+    "src": "asset/grid/thumbnail/20.jpg",
     "title": "Portal 2",
     "release": "2011",
     "author": "Moofy",
@@ -298,93 +359,125 @@ class GridComponent extends LitElement {
     "tags": []
   },
   {
-    "id": 18,
-    "src": "asset/grid/thumbnail/18.jpg",
+    "id": 19,
+    "src": "asset/grid/thumbnail/19.jpg",
     "title": "Shotcut",
     "release": "2011",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:software"
+    ]
   },
   {
-    "id": 17,
-    "src": "asset/grid/thumbnail/17.jpg",
+    "id": 18,
+    "src": "asset/grid/thumbnail/18.jpg",
     "title": "Microsoft Teams",
     "release": "2019",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:software"
+    ]
   },
   {
-    "id": 16,
-    "src": "asset/grid/thumbnail/16.jpg",
+    "id": 17,
+    "src": "asset/grid/thumbnail/17.jpg",
     "title": "Zoom",
     "release": "2011",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:software"
+    ]
   },
   {
-    "id": 15,
-    "src": "asset/grid/thumbnail/15.jpg",
+    "id": 16,
+    "src": "asset/grid/thumbnail/16.jpg",
     "title": "Photoscape X",
     "release": "2019",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:software"
+    ]
   },
   {
-    "id": 14,
-    "src": "asset/grid/thumbnail/14.jpg",
+    "id": 15,
+    "src": "asset/grid/thumbnail/15.jpg",
     "title": "GIMP",
     "release": "1996",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:software"
+    ]
   },
   {
-    "id": 13,
-    "src": "asset/grid/thumbnail/13.jpg",
+    "id": 14,
+    "src": "asset/grid/thumbnail/14.jpg",
     "title": "Paint.NET",
     "release": "2009",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:software"
+    ]
   },
   {
-    "id": 12,
-    "src": "asset/grid/thumbnail/12.jpg",
+    "id": 13,
+    "src": "asset/grid/thumbnail/13.jpg",
     "title": "Visual Studio Code",
     "release": "2016",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:software"
+    ]
   },
   {
-    "id": 11,
-    "src": "asset/grid/thumbnail/11.jpg",
+    "id": 12,
+    "src": "asset/grid/thumbnail/12.jpg",
     "title": "Discord",
     "release": "2019",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:software"
+    ]
   },
   {
-    "id": 10,
-    "src": "asset/grid/thumbnail/10.jpg",
+    "id": 11,
+    "src": "asset/grid/thumbnail/11.jpg",
     "title": "Spotify",
     "release": "2009",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:software"
+    ]
   },
   {
-    "id": 9,
-    "src": "asset/grid/thumbnail/9.jpg",
+    "id": 10,
+    "src": "asset/grid/thumbnail/10.jpg",
     "title": "Template for Software Collection",
     "release": "2021",
     "author": "theEMA",
     "resolution": "1200x1800",
+    "tags": [
+      "collection:software"
+    ]
+  },
+  {
+    "id": 9,
+    "src": "asset/grid/thumbnail/9.jpg",
+    "title": "Software Collection",
+    "release": "2021",
+    "author": "theEMA",
+    "resolution": "1200x1800",
+    "attributes": [
+      "collection"
+    ],
     "tags": []
   },
   {
@@ -481,11 +574,23 @@ class GridComponent extends LitElement {
       overlayImg.src = "";
       this.assets.find(asset => asset.id === src)?.attributes?.includes('horizontal') ? skeleton.classList.add('horizontal') : skeleton.classList.remove('horizontal');
       skeleton.classList.add('visible');
-      overlayImg.src = "asset/grid/" + src + ".png";
-      overlayImg.onload = () => {
-        overlayImg.classList.add('visible');
+      const asset = this.assets.find(asset => asset.id === src);
+      if (asset) {
+        overlayImg.src = "asset/grid/" + src + ".png";
+        overlayImg.onload = () => {
+          overlayImg.classList.add('visible');
+          skeleton.classList.remove('visible');
+        };
+        overlayImg.onerror = () => {
+          console.error(`Image not found for asset id: ${src}`);
+          skeleton.classList.remove('visible');
+          this.constructError(501, src);
+        };
+      } else {
+        console.error(`Asset not found for id: ${src}`);
         skeleton.classList.remove('visible');
-      };
+        this.constructError(501, src);
+      }
       overlay.classList.add('visible');
       window.addEventListener('scroll', this.hideOverlay.bind(this), { once: true });
     }
@@ -495,6 +600,10 @@ class GridComponent extends LitElement {
     const overlay = this.shadowRoot?.querySelector('.overlay');
     const overlayImg = overlay?.querySelector('img');
     if (overlay) {
+      var prevError = overlay.querySelector('.error-container');
+      if (prevError) {
+        prevError.remove();
+      }
       overlay.animate([
         { opacity: 1 },
         { opacity: 0 }
@@ -531,6 +640,44 @@ class GridComponent extends LitElement {
       });
 
       images.forEach(img => observer.observe(img));
+    }
+  }
+
+  private constructError(status: number = 404, src?: number) {
+    const overlay = this.shadowRoot?.querySelector('.overlay');
+    if (overlay) {
+      const errorContainer = document.createElement('div');
+      errorContainer.classList.add('error-container');
+
+      const errorTop = document.createElement('div');
+      errorTop.style.display = 'flex';
+      errorTop.style.justifyContent = 'center';
+      const errorTitle = document.createElement('span');
+      const errorIcon = document.createElement('span');
+      errorIcon.style.marginRight = '8px';
+      errorIcon.innerHTML = '<svg data-testid="geist-icon" height="16" stroke-linejoin="round" viewBox="0 0 16 16" style="color: currentcolor;"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.55846 2H7.44148L1.88975 13.5H14.1102L8.55846 2ZM9.90929 1.34788C9.65902 0.829456 9.13413 0.5 8.55846 0.5H7.44148C6.86581 0.5 6.34092 0.829454 6.09065 1.34787L0.192608 13.5653C-0.127943 14.2293 0.355835 15 1.09316 15H14.9068C15.6441 15 16.1279 14.2293 15.8073 13.5653L9.90929 1.34788ZM8.74997 4.75V5.5V8V8.75H7.24997V8V5.5V4.75H8.74997ZM7.99997 12C8.55226 12 8.99997 11.5523 8.99997 11C8.99997 10.4477 8.55226 10 7.99997 10C7.44769 10 6.99997 10.4477 6.99997 11C6.99997 11.5523 7.44769 12 7.99997 12Z" fill="currentColor"></path></svg>';
+
+
+      const errorMessage = document.createElement('p');
+      switch (status) {
+        case 404:
+          errorTitle.textContent = 'Not Found';
+          errorMessage.textContent = 'The image you are looking for is not found.';
+          break;
+        case 501:
+          errorTitle.textContent = 'Error: Not Implemented';
+          errorMessage.innerHTML = `The asset/collection is not yet implemented.<br><br><span style="font-family: var(--hx-font-mono)">asset-access-${status}-id-${src}</span>`;
+          break;
+        default:
+          errorTitle.textContent = 'Not Found';
+          break;
+      }
+      errorTop.appendChild(errorIcon);
+      errorTop.appendChild(errorTitle);
+      errorContainer.appendChild(errorTop); 
+      errorContainer.appendChild(errorMessage);
+
+      overlay.appendChild(errorContainer);
     }
   }
 

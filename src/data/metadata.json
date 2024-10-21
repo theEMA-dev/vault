@@ -24,7 +24,40 @@
     "tags": []
   },
   {
-    "id": 35,
+    "id": 40,
+    "title": "Map Labs Collection",
+    "release": "2021",
+    "author": "Map Labs Team",
+    "resolution": "1200x1800",
+    "attributes": [
+      "collection"
+    ],
+    "tags": [
+      "black"
+    ]
+  },
+  {
+    "id": 39,
+    "title": "Dark Echo",
+    "release": "2015",
+    "author": "Moofy",
+    "resolution": "1200x1800",
+    "tags": [
+      "black"
+    ]
+  },
+  {
+    "id": 38,
+    "title": "JOLT: Super Robot Racer",
+    "release": "2016",
+    "author": "Moofy",
+    "resolution": "1000x1500",
+    "tags": [
+      "blue"
+    ]
+  },
+  {
+    "id": 37,
     "title": "High Strangeness",
     "release": "2015",
     "author": "Moofy",
@@ -37,7 +70,7 @@
     ]
   },
   {
-    "id": 34,
+    "id": 36,
     "title": "FAST Racing Neo",
     "release": "2015",
     "author": "Moofy",
@@ -50,7 +83,7 @@
     ]
   },
   {
-    "id": 33,
+    "id": 35,
     "title": "Starblast",
     "release": "2017",
     "author": "theEMA",
@@ -60,7 +93,7 @@
     ]
   },
   {
-    "id": 32,
+    "id": 34,
     "title": "Cyberpunk 2077",
     "release": "2020",
     "author": "theEMA",
@@ -71,7 +104,7 @@
     ]
   },
   {
-    "id": 31,
+    "id": 33,
     "title": "Hollow Knight: Silksong",
     "release": "TBA",
     "author": "theEMA",
@@ -79,7 +112,7 @@
     "tags": []
   },
   {
-    "id": 30,
+    "id": 32,
     "title": "Zork Nemesis: The Forbidden Lands",
     "release": "2019",
     "author": "Moofy",
@@ -87,7 +120,7 @@
     "tags": []
   },
   {
-    "id": 29,
+    "id": 31,
     "title": "ACE COMBAT™ 7: SKIES UNKNOWN",
     "release": "2019",
     "author": "theEMA",
@@ -98,7 +131,7 @@
     "tags": []
   },
   {
-    "id": 28,
+    "id": 30,
     "title": "ACE COMBAT™ 7: SKIES UNKNOWN",
     "release": "2019",
     "author": "theEMA",
@@ -106,6 +139,22 @@
     "attributes": [
       "multi"
     ],
+    "tags": []
+  },
+  {
+    "id": 29,
+    "title": "Ancestors: The Humankind Odyssey",
+    "release": "2020",
+    "author": "theEMA",
+    "resolution": "1200x1800",
+    "tags": []
+  },
+  {
+    "id": 28,
+    "title": "Ancestors: The Humankind Odyssey",
+    "release": "2020",
+    "author": "theEMA",
+    "resolution": "1200x1800",
     "tags": []
   },
   {
@@ -118,54 +167,53 @@
   },
   {
     "id": 26,
-    "title": "Ancestors: The Humankind Odyssey",
-    "release": "2020",
-    "author": "theEMA",
+    "title": "Overwolf",
+    "release": "2021",
+    "author": "Moofy",
     "resolution": "1200x1800",
     "tags": []
   },
   {
     "id": 25,
-    "title": "Ancestors: The Humankind Odyssey",
-    "release": "2020",
-    "author": "theEMA",
+    "title": "Overwolf",
+    "release": "2021",
+    "author": "Moofy",
     "resolution": "1200x1800",
     "tags": []
   },
   {
     "id": 24,
-    "title": "Overwolf",
-    "release": "2021",
-    "author": "Moofy",
-    "resolution": "1200x1800",
-    "tags": []
-  },
-  {
-    "id": 23,
-    "title": "Overwolf",
-    "release": "2021",
-    "author": "Moofy",
-    "resolution": "1200x1800",
-    "tags": []
-  },
-  {
-    "id": 22,
     "title": "LEGO® The Hobbit™",
     "release": "2014",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:lego"
+    ]
   },
   {
-    "id": 21,
+    "id": 23,
     "title": "Template for Lego Collection",
     "release": "2021",
     "author": "theEMA",
     "resolution": "1200x1800",
+    "tags": [
+      "collection:lego"
+    ]
+  },
+  {
+    "id": 22,
+    "title": "Lego Collection",
+    "release": "2021",
+    "author": "theEMA",
+    "resolution": "1200x1800",
+    "attributes": [
+      "collection"
+    ],
     "tags": []
   },
   {
-    "id": 20,
+    "id": 21,
     "title": "Fall Guys",
     "release": "2020",
     "author": "theEMA",
@@ -173,7 +221,7 @@
     "tags": []
   },
   {
-    "id": 19,
+    "id": 20,
     "title": "Portal 2",
     "release": "2011",
     "author": "Moofy",
@@ -181,83 +229,114 @@
     "tags": []
   },
   {
-    "id": 18,
+    "id": 19,
     "title": "Shotcut",
     "release": "2011",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:software"
+    ]
   },
   {
-    "id": 17,
+    "id": 18,
     "title": "Microsoft Teams",
     "release": "2019",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:software"
+    ]
   },
   {
-    "id": 16,
+    "id": 17,
     "title": "Zoom",
     "release": "2011",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:software"
+    ]
   },
   {
-    "id": 15,
+    "id": 16,
     "title": "Photoscape X",
     "release": "2019",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:software"
+    ]
   },
   {
-    "id": 14,
+    "id": 15,
     "title": "GIMP",
     "release": "1996",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:software"
+    ]
   },
   {
-    "id": 13,
+    "id": 14,
     "title": "Paint.NET",
     "release": "2009",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:software"
+    ]
   },
   {
-    "id": 12,
+    "id": 13,
     "title": "Visual Studio Code",
     "release": "2016",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:software"
+    ]
   },
   {
-    "id": 11,
+    "id": 12,
     "title": "Discord",
     "release": "2019",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:software"
+    ]
   },
   {
-    "id": 10,
+    "id": 11,
     "title": "Spotify",
     "release": "2009",
     "author": "theEMA",
     "resolution": "1200x1800",
-    "tags": []
+    "tags": [
+      "collection:software"
+    ]
   },
   {
-    "id": 9,
+    "id": 10,
     "title": "Template for Software Collection",
     "release": "2021",
     "author": "theEMA",
     "resolution": "1200x1800",
+    "tags": [
+      "collection:software"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Software Collection",
+    "release": "2021",
+    "author": "theEMA",
+    "resolution": "1200x1800",
+    "attributes": [
+      "collection"
+    ],
     "tags": []
   },
   {

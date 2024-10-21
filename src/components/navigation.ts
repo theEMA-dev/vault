@@ -6,9 +6,11 @@ class NavComponent extends LitElement {
       display: flex;
       position: fixed;
       justify-content: space-between;
+      justify-items: stretch;
+      align-items: center;
       width: 100%;
       height: 48px;
-      background-color: var(--hx-background-alpha);
+      background-color: var(--hx-background-alpha-100);
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--hx-border-100);
@@ -35,11 +37,27 @@ class NavComponent extends LitElement {
     }
     li {
       display: inline;
-      margin-left: 1em;
+      margin-left: 28px;
     }
     a {
-      color: white;
+      font-size: .9rem;
+      font-weight: 500;
+      color: var(--hx-text-200);
       text-decoration: none;
+      transition: color 0.3s ease-in-out;
+    }
+    a.current {
+      color: var(--hx-text-100);
+    }
+    a:hover {
+      color: var(--hx-text-100);
+    }
+    span.ver {
+      margin-left: 16px;
+      font-family: var(--hx-font-mono);
+      font-size: .75rem;
+      font-weight: 400;
+      color: var(--hx-text-200);
     }
   `;
 
@@ -51,11 +69,12 @@ class NavComponent extends LitElement {
             <g stroke-width="0"/><g stroke-linecap="round" stroke-linejoin="round" stroke="#ffffff" stroke-width="0.128"/><g><path d="M0 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm9 0a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V1zm0 9a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-5z" fill="currentColor"/></g>
           </svg>
           <span>Vault</span>
+          <span class="ver">PREVIEW-1.0.0</span>
         </div>
         <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a class="current" href="#home">BROWSE</a></li>
+          <li><a href="#about">UPLOAD</a></li>
+          <li><a href="#contact">ABOUT</a></li>
         </ul>
       </nav>
     `;

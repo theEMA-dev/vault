@@ -26,13 +26,16 @@ html {
   --hx-background-300: hsl(0, 0%, 8%);
   --hx-background-400: hsl(0, 0%, 12%);
   --hx-background-500: hsl(0, 0%, 16%);
-  --hx-background-alpha: hsla(0, 0%, 5%, 0.8);
+  --hx-background-alpha-100: hsla(0, 0%, 5%, 0.8);
+  --hx-background-alpha-200: hsla(0, 0%, 5%, 0.6);
   --hx-border-100: hsl(0, 0%, 12%);
   --hx-border-200: hsl(0, 0%, 20%);
   --hx-border-300: hsl(0, 0%, 50%);
   --hx-text-100: hsl(0, 0%, 93%);
   --hx-text-200: hsl(0, 0%, 63%);
   --hx-text-brand: rgb(255, 1, 73);
+  --hx-red-100: rgb(68 13 19);
+  --hx-red-500: rgb(255 86 95);
 }
 body {
   background-color: var(--hx-background-100);
