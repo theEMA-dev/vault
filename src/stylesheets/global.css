@@ -1,0 +1,39 @@
+@font-face {
+  font-family: "Geist";
+  src: url("https://emirkaynar.com/static/font/Geist.woff2") format("woff2");
+  font-weight: 100 1000;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url("https://emirkaynar.com/static/font/GeistMono.woff2") format("woff2");
+  font-weight: 100 1000;
+  font-style: normal;
+  font-display: swap;
+}
+:root {
+  --hx-font-sans: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
+  --hx-font-mono: 'Geist Mono', 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
+  font-size: 16px;
+}
+:host, body, html {
+  font-family: var(--hx-font-sans);
+}
+html {
+  --hx-background-100: hsl(0, 0%, 0%);
+  --hx-background-200: hsl(0, 0%, 4%);
+  --hx-background-300: hsl(0, 0%, 8%);
+  --hx-background-400: hsl(0, 0%, 12%);
+  --hx-background-500: hsl(0, 0%, 16%);
+  --hx-background-alpha: hsla(0, 0%, 5%, 0.8);
+  --hx-border-100: hsl(0, 0%, 12%);
+  --hx-border-200: hsl(0, 0%, 20%);
+  --hx-border-300: hsl(0, 0%, 50%);
+  --hx-text-100: hsl(0, 0%, 93%);
+  --hx-text-200: hsl(0, 0%, 63%);
+  --hx-text-brand: rgb(255, 1, 73);
+}
+body {
+  background-color: var(--hx-background-100);
+}
