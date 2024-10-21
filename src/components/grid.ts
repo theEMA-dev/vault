@@ -94,13 +94,19 @@ class GridComponent extends LitElement {
     .skeleton {
       position: absolute;
       opacity: 0;
-      height: 90%;
+      width: auto;
+      height: 94vh;
       aspect-ratio: 2/3;
       background-color: #e0e0e0;
       background-image: linear-gradient(90deg, var(--hx-background-200), var(--hx-background-300), var(--hx-background-200));
       background-size: 200% 100%;
       animation: skeleton-loading 1.5s infinite;
       transition: opacity 0.3s ease;
+    }
+    .skeleton.horizontal {
+      width: 60vw;
+      height: auto;
+      aspect-ratio: 92/43;
     }
     .skeleton.visible {
       opacity: 1;
@@ -473,13 +479,12 @@ class GridComponent extends LitElement {
     const skeleton = overlay?.querySelector('.skeleton');
     if (overlay && overlayImg && skeleton) {
       overlayImg.src = "";
-      (skeleton as HTMLElement).style.aspectRatio = this.getAspectRatio(src).toString();
+      this.assets.find(asset => asset.id === src)?.attributes?.includes('horizontal') ? skeleton.classList.add('horizontal') : skeleton.classList.remove('horizontal');
       skeleton.classList.add('visible');
       overlayImg.src = "asset/grid/" + src + ".png";
       overlayImg.onload = () => {
         overlayImg.classList.add('visible');
         skeleton.classList.remove('visible');
-        (skeleton as HTMLElement).style.aspectRatio = "2/3";
       };
       overlay.classList.add('visible');
       window.addEventListener('scroll', this.hideOverlay.bind(this), { once: true });
@@ -510,8 +515,11 @@ class GridComponent extends LitElement {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const img = entry.target as HTMLImageElement;
+            img.style.opacity = '0';
             img.src = img.dataset.src!;
             img.onload = () => {
+              img.style.transition = 'opacity 0.3s ease-in-out';
+              img.style.opacity = '1';
               img.classList.add('loaded');
             };
             img.removeAttribute('data-src');
@@ -544,14 +552,5 @@ class GridComponent extends LitElement {
         <img src="" alt="Zoomed Image">
       </div>
     `;
-  }
-
-  private getAspectRatio(id: number) {
-    const asset = this.assets.find(asset => asset.id === id);
-    if (asset) {
-      const [width, height] = asset.resolution.split('x').map(Number);
-      return width / height;
-    }
-    return 1;
   }
 }
