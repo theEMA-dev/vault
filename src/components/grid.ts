@@ -1479,7 +1479,7 @@ export class GridComponent extends LitElement {
       skeleton.classList.add('visible');
       const asset = this.assets.find(asset => asset.id === src);
       if (asset) {
-        overlayImg.src = "asset/grid/" + src + ".png";
+        overlayImg.src = "/asset/grid/" + src + ".png";
         overlayImg.onload = () => {
           overlayImg.classList.add('visible');
           skeleton.classList.remove('visible');
