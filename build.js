@@ -11,7 +11,7 @@ function getAssets() {
   let assets = [];
   for (const dir of assetDirs) {
     const fullPath = path.resolve(dir);
-    const files = readdirSync(fullPath).filter(file => /\.(png|jpe?g|gif|svg)$/.test(file));
+    const files = readdirSync(fullPath).filter(file => /\.(png|jpe?g|webp|gif|svg)$/.test(file));
     assets = assets.concat(files.map(file => {
       const id = parseInt(path.basename(file, path.extname(file)), 10);
       const assetMetadata = metadata.find(meta => meta.id === id);

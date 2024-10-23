@@ -1,6 +1,8 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, PropertyValues } from 'lit';
+import { customElement } from 'lit/decorators.js';
 
-class NavComponent extends LitElement {
+@customElement('navigation-hx')
+export class NavComponent extends LitElement {
   static styles = css`
     nav {
       display: flex;
@@ -29,6 +31,7 @@ class NavComponent extends LitElement {
     }
     ul {
       display: flex;
+      height: 100%;
       align-items: center;
       list-style-type: none;
       margin: 0;
@@ -37,9 +40,9 @@ class NavComponent extends LitElement {
     }
     li {
       display: inline;
-      margin-left: 28px;
     }
     a {
+      padding: 12px 12px;
       font-size: .9rem;
       font-weight: 500;
       color: var(--hx-text-200);
@@ -53,13 +56,27 @@ class NavComponent extends LitElement {
       color: var(--hx-text-100);
     }
     span.ver {
-      margin-left: 16px;
+      margin-left: 12px;
       font-family: var(--hx-font-mono);
       font-size: .75rem;
       font-weight: 400;
       color: var(--hx-text-200);
     }
   `;
+
+  firstUpdated() {
+    const links = this.shadowRoot!.querySelectorAll('a');
+    const path = window.location.pathname;
+    console.log(links[0].getAttribute('href'));
+    console.log(path);
+    links.forEach((link) => {
+      if (link.getAttribute('href') === path + ".html") {
+        link.classList.add('current');
+      } else if (path === '/') {
+        links[0].classList.add('current');
+      }
+    });
+  }
 
   render() {
     return html`
@@ -69,16 +86,15 @@ class NavComponent extends LitElement {
             <g stroke-width="0"/><g stroke-linecap="round" stroke-linejoin="round" stroke="#ffffff" stroke-width="0.128"/><g><path d="M0 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm9 0a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V1zm0 9a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-5z" fill="currentColor"/></g>
           </svg>
           <span>Vault</span>
-          <span class="ver">PREVIEW-1.0.0</span>
+          <span class="ver">PREVIEW</span>
         </div>
         <ul>
-          <li><a class="current" href="#home">BROWSE</a></li>
-          <li><a href="#about">UPLOAD</a></li>
-          <li><a href="#contact">ABOUT</a></li>
+          <li><a href="/index.html">BROWSE</a></li>
+          <li><a href="/collection/map-labs.html">MAPLABS</a></li>
+          <li><a href="/collection/lego.html">LEGO</a></li>
+          <li><a href="/collection/software.html">SOFTWARE</a></li>
         </ul>
       </nav>
     `;
   }
 }
-
-customElements.define('navigation-hx', NavComponent);

@@ -40,3 +40,8 @@ html {
 body {
   background-color: var(--hx-background-100);
 }
+@media (max-width: 480px) {
+  :root {
+    font-size: 14px;
+  }
+}
