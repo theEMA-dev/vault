@@ -70,7 +70,7 @@ export class NavComponent extends LitElement {
     console.log(links[0].getAttribute('href'));
     console.log(path);
     links.forEach((link) => {
-      if (link.getAttribute('href') === path + ".html") {
+      if (link.getAttribute('href') === path) {
         link.classList.add('current');
       } else if (path === '/') {
         links[0].classList.add('current');
@@ -89,10 +89,10 @@ export class NavComponent extends LitElement {
           <span class="ver">PREVIEW</span>
         </div>
         <ul>
-          <li><a href="/index.html">BROWSE</a></li>
-          <li><a href="/collection/map-labs.html">MAPLABS</a></li>
-          <li><a href="/collection/lego.html">LEGO</a></li>
-          <li><a href="/collection/software.html">SOFTWARE</a></li>
+          <li><a href="/">BROWSE</a></li>
+          <li><a href="/collection/map-labs">MAPLABS</a></li>
+          <li><a href="/collection/lego">LEGO</a></li>
+          <li><a href="/collection/software">SOFTWARE</a></li>
         </ul>
       </nav>
     `;
