@@ -16,7 +16,7 @@ export class NavComponent extends LitElement {
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--hx-border-100);
-      z-index: 1;
+      z-index: 100;
     }
     .brand {
       display: flex;
@@ -35,14 +35,14 @@ export class NavComponent extends LitElement {
       align-items: center;
       list-style-type: none;
       margin: 0;
-      margin-right: 40px;
+      margin-right: 28px;
       padding: 0;
     }
     li {
       display: inline;
     }
     a {
-      padding: 12px 12px;
+      padding: 16px 12px;
       font-size: .9rem;
       font-weight: 500;
       color: var(--hx-text-200);

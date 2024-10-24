@@ -39,6 +39,7 @@ html {
 }
 body {
   background-color: var(--hx-background-100);
+  color: var(--hx-text-100);
 }
 @media (max-width: 480px) {
   :root {
