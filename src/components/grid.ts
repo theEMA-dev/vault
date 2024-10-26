@@ -72,6 +72,7 @@ export class GridComponent extends LitElement {
       visibility: hidden;
       opacity: 0;
       max-width: 60vw;
+      max-height: 94dvh;
       max-height: 94vh;
       transition: visibility 0s, opacity 0.3s ease;
     }
@@ -199,6 +200,84 @@ export class GridComponent extends LitElement {
       font-weight: 700;
       line-height: 1;
     }
+    .info-overlay {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      justify-content: space-between;
+      align-items: center;
+      opacity: 1;
+      width: auto;
+      height: 94dvh;
+      height: 94vh;
+      aspect-ratio: 2/3;
+      transition: opacity 0.3s ease-in-out;
+    }
+    .info-overlay.horizontal {
+      width: 60vw;
+      height: auto;
+      aspect-ratio: 92/43;
+    }
+    .info-overlay > div {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      transition: opacity .5s ease-out;
+    }
+    .info-overlay.effects:hover > div {
+      opacity: 0;
+    }
+    .info-overlay.effects > div:hover {
+      opacity: 1;
+    }
+    .info-overlay #overlay-material-200 {
+      width: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: var(--hx-background-alpha-200);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid var(--hx-border-200);
+      border-radius: 8px;
+      margin: .75rem;
+      padding: .75rem;
+    }
+    .info-overlay a {
+      padding: .5rem;
+    }
+    .info-overlay a > span{
+      color: var(--hx-text-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      padding: 8px;
+      background-color: var(--hx-background-alpha-200);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid var(--hx-border-200);
+      line-height: 1;
+      transition: color 0.3s ease-in-out;
+      pointer-events: all;
+    }
+    .info-overlay a:hover > span {
+      color: var(--hx-text-brand);
+    }
+    .info-overlay h2 {
+      display: block;
+      font-weight: 700;
+      text-align: center;
+      margin: 0;
+      line-height: 1;
+    }
+    .info-overlay h2 > span {
+      display: inline-block;
+      vertical-align: 24%;
+      margin-left: 4px;
+      font-size: .9rem;
+      font-weight: 500;
+    }
     /* BREAKPOINTS */
     @media (max-width: 1600px) {
       .grid {
@@ -219,10 +298,16 @@ export class GridComponent extends LitElement {
       .grid {
         grid-template-columns: repeat(2, 1fr);
       }
+      .overlay img {
+        max-width: 80vw;
+      }
     }
     @media (max-width: 480px) {
       .grid {
         grid-template-columns: 1fr;
+      }
+      .overlay img {
+        max-width: 90vw;
       }
     }
   `;
@@ -1087,7 +1172,7 @@ export class GridComponent extends LitElement {
     "src": "asset/grid/thumbnail/39.webp",
     "title": "Dark Echo",
     "release": "2015",
-    "author": "Moofy",
+    "author": "theEMA",
     "resolution": "1200x1800",
     "tags": [
       "black"
@@ -1540,9 +1625,18 @@ export class GridComponent extends LitElement {
     const overlay = this.shadowRoot?.querySelector('.overlay');
     const overlayImg = overlay?.querySelector('img');
     const skeleton = overlay?.querySelector('.skeleton');
+    const overlayInfo = overlay?.querySelector('.info-overlay');
+    console.log(overlayInfo);
     if (overlay && overlayImg && skeleton) {
       overlayImg.src = "";
-      this.assets.find(asset => asset.id === src)?.attributes?.includes('horizontal') ? skeleton.classList.add('horizontal') : skeleton.classList.remove('horizontal');
+      const isHorizontal = this.assets.find(asset => asset.id === src)?.attributes?.includes('horizontal');
+      if (isHorizontal) {
+        skeleton.classList.add('horizontal');
+        overlayInfo?.classList.add('horizontal');
+      } else {
+        skeleton.classList.remove('horizontal');
+        overlayInfo?.classList.remove('horizontal');
+      }
       skeleton.classList.add('visible');
       const asset = this.assets.find(asset => asset.id === src);
       if (asset) {
@@ -1550,6 +1644,24 @@ export class GridComponent extends LitElement {
         overlayImg.onload = () => {
           overlayImg.classList.add('visible');
           skeleton.classList.remove('visible');
+          if (overlayInfo) {
+            overlayInfo.innerHTML = `
+              <div>
+                <a title="Download the asset" href="/asset/grid/${src}.png" download>
+                  <span>
+                    <svg height="24" stroke-linejoin="round" viewBox="0 0 16 16" width="24" style="color: currentcolor;"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.75 1V1.75V8.68934L10.7197 6.71967L11.25 6.18934L12.3107 7.25L11.7803 7.78033L8.70711 10.8536C8.31658 11.2441 7.68342 11.2441 7.29289 10.8536L4.21967 7.78033L3.68934 7.25L4.75 6.18934L5.28033 6.71967L7.25 8.68934V1.75V1H8.75ZM13.5 9.25V13.5H2.5V9.25V8.5H1V9.25V14C1 14.5523 1.44771 15 2 15H14C14.5523 15 15 14.5523 15 14V9.25V8.5H13.5V9.25Z" fill="currentColor"></path></svg>
+                  </span>
+                </a>
+              </div>
+              <div id="overlay-material-200">
+                <h2>${asset.title} <span>by ${asset.author}</span></h2>
+              </div>
+            `;
+            setTimeout(() => {
+              overlayInfo.classList.add('effects');
+              overlayInfo.querySelector('div')?.dispatchEvent(new Event('mouseenter'));
+            }, 3000);
+          }
         };
         overlayImg.onerror = () => {
           skeleton.classList.remove('visible');
@@ -1568,6 +1680,7 @@ export class GridComponent extends LitElement {
   private hideOverlay() {
     const overlay = this.shadowRoot?.querySelector('.overlay');
     const overlayImg = overlay?.querySelector('img');
+    const overlayInfo = overlay?.querySelector('.info-overlay');
     if (overlay) {
       var prevError = overlay.querySelector('.error-container');
       if (prevError) {
@@ -1583,6 +1696,9 @@ export class GridComponent extends LitElement {
         overlay.classList.remove('visible');
       };
       overlayImg?.classList.remove('visible');
+      if (overlayInfo) {
+        overlayInfo.classList.remove('effects');
+      }
     }
     history.replaceState(null, '', ' ');
   }
@@ -1723,6 +1839,7 @@ export class GridComponent extends LitElement {
       <div class="overlay" @click="${this.hideOverlay}">
         <div class="skeleton"></div>
         <img src="" alt="Zoomed Image">
+        <div class="info-overlay"></div>
       </div>
     `;
   }
