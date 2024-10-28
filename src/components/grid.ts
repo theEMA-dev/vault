@@ -278,6 +278,10 @@ export class GridComponent extends LitElement {
       font-size: .9rem;
       font-weight: 500;
     }
+    .visible {
+      visibility: visible;
+      opacity: 1;
+    }
     /* BREAKPOINTS */
     @media (max-width: 1600px) {
       .grid {
@@ -1657,6 +1661,7 @@ export class GridComponent extends LitElement {
                 <h2>${asset.title} <span>by ${asset.author}</span></h2>
               </div>
             `;
+            overlayInfo.classList.add('visible');
             setTimeout(() => {
               overlayInfo.classList.add('effects');
               overlayInfo.querySelector('div')?.dispatchEvent(new Event('mouseenter'));
@@ -1697,7 +1702,8 @@ export class GridComponent extends LitElement {
       };
       overlayImg?.classList.remove('visible');
       if (overlayInfo) {
-        overlayInfo.classList.remove('effects');
+        overlayInfo.innerHTML = '';
+        overlayInfo.classList.remove('visible', 'effects');
       }
     }
     history.replaceState(null, '', ' ');
