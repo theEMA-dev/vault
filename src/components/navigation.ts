@@ -37,6 +37,7 @@ export class NavComponent extends LitElement {
       margin: 0;
       margin-right: 28px;
       padding: 0;
+      overflow-x: scroll;
     }
     li {
       display: inline;

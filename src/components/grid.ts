@@ -32,7 +32,7 @@ export class GridComponent extends LitElement {
       display: grid; 
       grid-auto-rows: auto; 
       grid-template-columns: repeat(6, 1fr); 
-      gap: 32px;
+      gap: 2rem;
       padding: 5rem 2.5rem 2.5rem 2.5rem;
     }
     .item {
@@ -64,7 +64,8 @@ export class GridComponent extends LitElement {
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
+      height: 100dvh;
+      height: 100vh;
       background: var(--hx-background-alpha-100);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
@@ -80,6 +81,7 @@ export class GridComponent extends LitElement {
       position: relative;
       object-fit: scale-down;
       max-width: 100vw;
+      height: 94dvh;
       height: 94vh;
       aspect-ratio: 2/3;
     }
@@ -91,7 +93,7 @@ export class GridComponent extends LitElement {
     .overlay img {
       max-width: 100%;
       visibility: hidden;
-      object-fit: scale-down;
+      object-fit: contain;
       opacity: 0;
       transition: visibility 0s, opacity 0.3s ease;
       z-index: 1;
@@ -273,11 +275,22 @@ export class GridComponent extends LitElement {
     @media (max-width: 990px) {
       .grid {
         grid-template-columns: repeat(3, 1fr);
+        padding: 5rem 2rem 2rem 2rem;
       }
     }
     @media (max-width: 770px) {
       .grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 550px) {
+      .overlay .content {
+        width: 100vw;
+        height: auto;
+      }
+      .overlay img {
+        max-width: 100%;
+        height: auto;
       }
     }
     @media (max-width: 480px) {
@@ -1624,12 +1637,14 @@ export class GridComponent extends LitElement {
             (overlayDownload as HTMLAnchorElement).href = `/asset/grid/${src}.png`;
             const overlayGridInfo = overlayFull?.querySelector('#overlay-grid-info');
             if (overlayGridInfo) {
-              overlayGridInfo.innerHTML = asset.title + '<br>' + asset.resolution;
+                overlayGridInfo.textContent = asset.resolution;
             }
             overlayFull?.classList.remove('invisible');
             overlayFull?.classList.add('visible');
           setTimeout(() => {
-            overlayFull?.classList.remove('visible');
+            if (window.innerWidth > 770 && !(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) {
+              overlayFull?.classList.remove('visible');
+            }
           }, 2000);
           }
         };
@@ -1668,7 +1683,11 @@ export class GridComponent extends LitElement {
       };
       overlayImg?.classList.remove('visible');
       if (overlayFull) {
+        const overlayGridInfo = overlayFull.querySelector('#overlay-grid-info');
         overlayFull.classList.remove('visible');
+        if (overlayGridInfo) {
+          overlayGridInfo.innerHTML = '';
+        }
       }
     }
     history.replaceState(null, '', ' ');
