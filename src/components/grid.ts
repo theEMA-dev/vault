@@ -20,6 +20,14 @@ export class GridComponent extends LitElement {
   collectionRenderer = '';
 
   static styles = css`
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
     .grid {
       display: grid; 
       grid-auto-rows: auto; 
@@ -59,7 +67,7 @@ export class GridComponent extends LitElement {
       height: 100%;
       background: var(--hx-background-alpha-100);
       backdrop-filter: blur(10px);
-      webkit-backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -68,13 +76,25 @@ export class GridComponent extends LitElement {
       opacity: 0;
       transition: visibility 0s, opacity 0.3s ease;
     }
+    .overlay .content {
+      position: relative;
+      object-fit: scale-down;
+      max-width: 100vw;
+      height: 94vh;
+      aspect-ratio: 2/3;
+    }
+    .overlay .content.horizontal {
+      width: 80vw;
+      height: auto;
+      aspect-ratio: 92/43;
+    }
     .overlay img {
+      max-width: 100%;
       visibility: hidden;
+      object-fit: scale-down;
       opacity: 0;
-      max-width: 60vw;
-      max-height: 94dvh;
-      max-height: 94vh;
       transition: visibility 0s, opacity 0.3s ease;
+      z-index: 1;
     }
     .overlay img.visible {
       visibility: visible;
@@ -84,33 +104,25 @@ export class GridComponent extends LitElement {
       visibility: visible;
       opacity: 1;
     }
-    .item img.loaded {
+    .overlay img.loaded {
       animation: fadeIn 0.5s ease-in-out;
     }
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+    .overlay .skeleton,
+    .overlay img,
+    .overlay .full-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
     }
     .skeleton {
-      position: absolute;
       opacity: 0;
-      width: auto;
-      height: 94vh;
-      aspect-ratio: 2/3;
       background-color: #e0e0e0;
       background-image: linear-gradient(90deg, var(--hx-background-200), var(--hx-background-300), var(--hx-background-200));
       background-size: 200% 100%;
       animation: skeleton-loading 1.5s infinite;
       transition: opacity 0.3s ease;
-    }
-    .skeleton.horizontal {
-      width: 60vw;
-      height: auto;
-      aspect-ratio: 92/43;
     }
     .skeleton.visible {
       opacity: 1;
@@ -122,6 +134,50 @@ export class GridComponent extends LitElement {
       100% {
         background-position: -200% 0;
       }
+    }
+    .full-overlay {
+      position: absolute;
+      width: 100%;
+      display: flex;
+      position: absolute;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      z-index: 2;
+    }
+    .full-overlay:hover {
+      opacity: 1;
+    }
+    .full-overlay:hover.invisible {
+      opacity: 0;
+    }
+    .full-overlay a {
+      margin: .5rem;
+    }
+    .full-overlay span {
+      color: var(--hx-text-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      padding: 8px;
+      background-color: var(--hx-background-alpha-200);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid var(--hx-border-200);
+      line-height: 1;
+      transition: color 0.3s ease-in-out;
+      pointer-events: all;
+    }
+    .full-overlay > span {
+      margin: .5rem;
+      padding: 4px;
+      font-size: .875rem;
+    }
+    .full-overlay a:hover > span {
+      color: var(--hx-text-brand);
     }
     .error-container {
       color: var(--hx-red-500);
@@ -200,86 +256,7 @@ export class GridComponent extends LitElement {
       font-weight: 700;
       line-height: 1;
     }
-    .info-overlay {
-      display: flex;
-      flex-direction: column;
-      position: absolute;
-      justify-content: space-between;
-      align-items: center;
-      opacity: 1;
-      width: auto;
-      height: 94dvh;
-      height: 94vh;
-      aspect-ratio: 2/3;
-      transition: opacity 0.3s ease-in-out;
-    }
-    .info-overlay.horizontal {
-      width: 60vw;
-      height: auto;
-      aspect-ratio: 92/43;
-    }
-    .info-overlay > div {
-      width: 100%;
-      display: flex;
-      justify-content: flex-end;
-      transition: opacity .5s ease-out;
-    }
-    .info-overlay.effects:hover > div {
-      opacity: 0;
-    }
-    .info-overlay.effects > div:hover {
-      opacity: 1;
-    }
-    .info-overlay #overlay-material-200 {
-      width: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background-color: var(--hx-background-alpha-200);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      border: 1px solid var(--hx-border-200);
-      border-radius: 8px;
-      margin: .75rem;
-      padding: .75rem;
-    }
-    .info-overlay a {
-      padding: .5rem;
-    }
-    .info-overlay a > span{
-      color: var(--hx-text-100);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      padding: 8px;
-      background-color: var(--hx-background-alpha-200);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      border: 1px solid var(--hx-border-200);
-      line-height: 1;
-      transition: color 0.3s ease-in-out;
-      pointer-events: all;
-    }
-    .info-overlay a:hover > span {
-      color: var(--hx-text-brand);
-    }
-    .info-overlay h2 {
-      display: block;
-      font-weight: 700;
-      text-align: center;
-      margin: 0;
-      line-height: 1;
-    }
-    .info-overlay h2 > span {
-      display: inline-block;
-      vertical-align: 24%;
-      margin-left: 4px;
-      font-size: .9rem;
-      font-weight: 500;
-    }
     .visible {
-      visibility: visible;
       opacity: 1;
     }
     /* BREAKPOINTS */
@@ -302,16 +279,10 @@ export class GridComponent extends LitElement {
       .grid {
         grid-template-columns: repeat(2, 1fr);
       }
-      .overlay img {
-        max-width: 80vw;
-      }
     }
     @media (max-width: 480px) {
       .grid {
         grid-template-columns: 1fr;
-      }
-      .overlay img {
-        max-width: 90vw;
       }
     }
   `;
@@ -1629,17 +1600,18 @@ export class GridComponent extends LitElement {
     const overlay = this.shadowRoot?.querySelector('.overlay');
     const overlayImg = overlay?.querySelector('img');
     const skeleton = overlay?.querySelector('.skeleton');
-    const overlayInfo = overlay?.querySelector('.info-overlay');
-    console.log(overlayInfo);
+    const overlayFull = overlay?.querySelector('.full-overlay');
+    const overlayContent = overlay?.querySelector('.overlay .content');
+    const overlayDownload = overlay?.querySelector('.overlay .content a');
     if (overlay && overlayImg && skeleton) {
       overlayImg.src = "";
       const isHorizontal = this.assets.find(asset => asset.id === src)?.attributes?.includes('horizontal');
       if (isHorizontal) {
         skeleton.classList.add('horizontal');
-        overlayInfo?.classList.add('horizontal');
+        overlayContent?.classList.add('horizontal');
       } else {
         skeleton.classList.remove('horizontal');
-        overlayInfo?.classList.remove('horizontal');
+        overlayContent?.classList.remove('horizontal');
       }
       skeleton.classList.add('visible');
       const asset = this.assets.find(asset => asset.id === src);
@@ -1648,28 +1620,22 @@ export class GridComponent extends LitElement {
         overlayImg.onload = () => {
           overlayImg.classList.add('visible');
           skeleton.classList.remove('visible');
-          if (overlayInfo) {
-            overlayInfo.innerHTML = `
-              <div>
-                <a title="Download the asset" href="/asset/grid/${src}.png" download>
-                  <span>
-                    <svg height="24" stroke-linejoin="round" viewBox="0 0 16 16" width="24" style="color: currentcolor;"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.75 1V1.75V8.68934L10.7197 6.71967L11.25 6.18934L12.3107 7.25L11.7803 7.78033L8.70711 10.8536C8.31658 11.2441 7.68342 11.2441 7.29289 10.8536L4.21967 7.78033L3.68934 7.25L4.75 6.18934L5.28033 6.71967L7.25 8.68934V1.75V1H8.75ZM13.5 9.25V13.5H2.5V9.25V8.5H1V9.25V14C1 14.5523 1.44771 15 2 15H14C14.5523 15 15 14.5523 15 14V9.25V8.5H13.5V9.25Z" fill="currentColor"></path></svg>
-                  </span>
-                </a>
-              </div>
-              <div id="overlay-material-200">
-                <h2>${asset.title} <span>by ${asset.author}</span></h2>
-              </div>
-            `;
-            overlayInfo.classList.add('visible');
-            setTimeout(() => {
-              overlayInfo.classList.add('effects');
-              overlayInfo.querySelector('div')?.dispatchEvent(new Event('mouseenter'));
-            }, 3000);
+          if (overlayDownload) {
+            (overlayDownload as HTMLAnchorElement).href = `/asset/grid/${src}.png`;
+            const overlayGridInfo = overlayFull?.querySelector('#overlay-grid-info');
+            if (overlayGridInfo) {
+              overlayGridInfo.innerHTML = asset.title + '<br>' + asset.resolution;
+            }
+            overlayFull?.classList.remove('invisible');
+            overlayFull?.classList.add('visible');
+          setTimeout(() => {
+            overlayFull?.classList.remove('visible');
+          }, 2000);
           }
         };
         overlayImg.onerror = () => {
           skeleton.classList.remove('visible');
+          overlayFull?.classList.add('invisible');
           this.constructError(404, src);
         };
       } else {
@@ -1685,7 +1651,7 @@ export class GridComponent extends LitElement {
   private hideOverlay() {
     const overlay = this.shadowRoot?.querySelector('.overlay');
     const overlayImg = overlay?.querySelector('img');
-    const overlayInfo = overlay?.querySelector('.info-overlay');
+    const overlayFull = overlay?.querySelector('.full-overlay');
     if (overlay) {
       var prevError = overlay.querySelector('.error-container');
       if (prevError) {
@@ -1701,9 +1667,8 @@ export class GridComponent extends LitElement {
         overlay.classList.remove('visible');
       };
       overlayImg?.classList.remove('visible');
-      if (overlayInfo) {
-        overlayInfo.innerHTML = '';
-        overlayInfo.classList.remove('visible', 'effects');
+      if (overlayFull) {
+        overlayFull.classList.remove('visible');
       }
     }
     history.replaceState(null, '', ' ');
@@ -1797,7 +1762,7 @@ export class GridComponent extends LitElement {
     infoPane.innerHTML = `
       <div id="info-pane-top">
         <span>${asset.resolution}</span>
-        <a href="${source}" download>
+        <a href="${source}" aria-label="Download this asset" download>
           <span id="svg-container">
             <svg height="20" stroke-linejoin="round" viewBox="0 0 16 16" width="20" style="color: currentcolor;"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.75 1V1.75V8.68934L10.7197 6.71967L11.25 6.18934L12.3107 7.25L11.7803 7.78033L8.70711 10.8536C8.31658 11.2441 7.68342 11.2441 7.29289 10.8536L4.21967 7.78033L3.68934 7.25L4.75 6.18934L5.28033 6.71967L7.25 8.68934V1.75V1H8.75ZM13.5 9.25V13.5H2.5V9.25V8.5H1V9.25V14C1 14.5523 1.44771 15 2 15H14C14.5523 15 15 14.5523 15 14V9.25V8.5H13.5V9.25Z" fill="currentColor"></path></svg>
           </span>
@@ -1838,14 +1803,23 @@ export class GridComponent extends LitElement {
           <div class="item${asset.attributes ? " " + asset.attributes[0] : ""}"
                @mouseenter="${(e: MouseEvent) => this.showInfoPane(e, asset)}"
                @mouseleave="${this.hideInfoPane}">
-            <img data-src="/${asset.src}" @click="${() => this.showOverlay(asset.id)}">
+            <img data-src="/${asset.src}" aria-label="Custom Asset for ${asset.title} by ${asset.author}" @click="${() => this.showOverlay(asset.id)}">
           </div>
         `)}
       </div>
       <div class="overlay" @click="${this.hideOverlay}">
-        <div class="skeleton"></div>
-        <img src="" alt="Zoomed Image">
-        <div class="info-overlay"></div>
+        <div class="content">
+          <img src="" alt="Zoomed Image">
+          <div class="skeleton"></div>
+          <div class="full-overlay">
+            <span id="overlay-grid-info"></span>
+            <a title="Download the asset" href="" download>
+              <span>
+                <svg height="24" stroke-linejoin="round" viewBox="0 0 16 16" width="24" style="color: currentcolor;"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.75 1V1.75V8.68934L10.7197 6.71967L11.25 6.18934L12.3107 7.25L11.7803 7.78033L8.70711 10.8536C8.31658 11.2441 7.68342 11.2441 7.29289 10.8536L4.21967 7.78033L3.68934 7.25L4.75 6.18934L5.28033 6.71967L7.25 8.68934V1.75V1H8.75ZM13.5 9.25V13.5H2.5V9.25V8.5H1V9.25V14C1 14.5523 1.44771 15 2 15H14C14.5523 15 15 14.5523 15 14V9.25V8.5H13.5V9.25Z" fill="currentColor"></path></svg>
+              </span>
+            </a>
+          </div>
+        </div>
       </div>
     `;
   }
