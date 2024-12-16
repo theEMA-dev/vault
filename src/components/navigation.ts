@@ -4,6 +4,11 @@ import { customElement } from 'lit/decorators.js';
 @customElement('navigation-hx')
 export class NavComponent extends LitElement {
   static styles = css`
+    :host {
+      display: block;
+      width: 100%;
+      height: 48px;
+    }
     nav {
       display: flex;
       position: fixed;
@@ -68,8 +73,6 @@ export class NavComponent extends LitElement {
   firstUpdated() {
     const links = this.shadowRoot!.querySelectorAll('a');
     const path = window.location.pathname;
-    console.log(links[0].getAttribute('href'));
-    console.log(path);
     links.forEach((link) => {
       if (link.getAttribute('href') === path) {
         link.classList.add('current');
@@ -77,6 +80,15 @@ export class NavComponent extends LitElement {
         links[0].classList.add('current');
       }
     });
+    var ver = localStorage.getItem('prefs');
+    if (ver === null) {
+      ver = '{"preview": false}';
+    }
+    const prefs = JSON.parse(ver);
+      const isPreview = prefs.preview;
+    if (!isPreview) {
+      this.shadowRoot?.querySelector('.ver')?.remove();
+    }
   }
 
   render() {

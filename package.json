@@ -3,9 +3,8 @@
   "module": "main.ts",
   "type": "module",
   "scripts": {
-    "build": "bun run asset-builder && bun build src/main.ts --outdir ./dist",
-    "asset-builder": "bun run build.js",
-    "dev": "bun run asset-builder && bun run build && bun run serve -p 25420",
+    "build": "bun build src/main.ts --outdir ./dist",
+    "dev": "bun run build && bun run serve -p 25420",
     "dev-w": "nodemon --watch src --watch asset --watch index.html --ext js,ts,html,css --exec 'bun build src/main.ts --outdir ./dist && bun run serve -p 25420'"
   },
   "devDependencies": {
