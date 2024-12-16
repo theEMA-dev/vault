@@ -29,9 +29,6 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - name: Process assets
-        run: bun run asset-builder
-
       - name: Build project
         run: bun build src/main.ts --outdir ./dist
 
