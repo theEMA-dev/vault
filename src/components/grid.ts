@@ -40,7 +40,7 @@ export class GridComponent extends LitElement {
       grid-auto-rows: auto;
       grid-template-columns: repeat(6, 1fr); 
       gap: 2rem;
-      padding: 0rem 2.5rem 2.5rem 2.5rem;
+      padding: 0rem 2.5rem 2.5rem;
     }
     .item {
       display: flex;
@@ -71,7 +71,7 @@ export class GridComponent extends LitElement {
       top: 0;
       left: 0;
       width: 100%;
-      height: 100dvh;
+      height: 100svh;
       height: 100vh;
       background: var(--hx-background-alpha-100);
       backdrop-filter: blur(10px);
@@ -282,7 +282,7 @@ export class GridComponent extends LitElement {
     @media (max-width: 990px) {
       .grid {
         grid-template-columns: repeat(3, 1fr);
-        padding: 0rem 2rem 2rem 2rem;
+        padding: 0rem 2rem 2rem;
       }
     }
     @media (max-width: 770px) {
@@ -303,11 +303,13 @@ export class GridComponent extends LitElement {
     @media (max-width: 480px) {
       .grid {
         grid-template-columns: 1fr;
-        padding: 0rem 1rem 1rem 1rem;
+        padding: 0rem 1rem 1rem;
         gap: 1rem;
       }
     }
   `;
+
+private lastFocusedElement: HTMLElement | null = null;
 
 private collectionsCollector(assets: Asset[]) {
   const collections: { [key: string]: Asset[] } = {};
@@ -353,7 +355,7 @@ private collectionsCollector(assets: Asset[]) {
 
   private readonly ANIMATION_DURATION = 2000;
 
-  private showOverlay(src: number) {
+  private showOverlay(src: number, sourceElement?: Element | null) {
     // Cache DOM queries
     const elements = Object.entries(this.OVERLAY_SELECTORS).reduce((acc, [key, selector]) => ({
       ...acc,
@@ -405,7 +407,7 @@ private collectionsCollector(assets: Asset[]) {
 
       const isDesktop = !('ontouchstart' in window);
 
-      if (isDesktop) {
+      if (isDesktop && sourceElement === undefined) {
         const timeout = setTimeout(() => {
           fullOverlay.classList.remove('visible');
           clearTimeout(timeout);
@@ -444,7 +446,8 @@ private collectionsCollector(assets: Asset[]) {
       overlay.classList.add('visible');
       (image as HTMLImageElement).src = `/asset/grid/${src}.png`;
       window.location.hash = `#preview${src}`;
-
+      this.lastFocusedElement = sourceElement as HTMLElement || document.activeElement as HTMLElement;
+      overlay.focus();
     } catch (error) {
       console.error('Error showing overlay:', error);
       this.constructError(500, src);
@@ -456,6 +459,9 @@ private collectionsCollector(assets: Asset[]) {
     const overlay = this.shadowRoot?.querySelector('.overlay');
     const overlayImg = overlay?.querySelector('img');
     const overlayFull = overlay?.querySelector('.full-overlay');
+    if (this.lastFocusedElement) {
+      this.lastFocusedElement.focus();
+    }
     if (overlay) {
       var prevError = overlay.querySelector('.error-container');
       if (prevError) {
@@ -480,6 +486,35 @@ private collectionsCollector(assets: Asset[]) {
       }
     }
     history.replaceState(null, '', ' ');
+  }
+
+  private handleGridKeydown(e: KeyboardEvent, asset: Asset) {
+    const target = e.target as HTMLElement;
+    
+    switch(e.key) {
+      case 'Enter':
+        this.showOverlay(asset.id, e.target as HTMLElement);
+        break;
+      case 'ArrowRight':
+        e.preventDefault();
+        (target.nextElementSibling as HTMLElement)?.focus();
+        break;
+      case 'ArrowLeft':
+        e.preventDefault();
+        (target.previousElementSibling as HTMLElement)?.focus();
+        break;
+      case 'ArrowDown':
+      case 'ArrowUp':
+        e.preventDefault();
+        const items = Array.from(this.shadowRoot!.querySelectorAll('.item'));
+        const currentIndex = items.indexOf(target);
+        const columns = getComputedStyle(target.parentElement!).gridTemplateColumns.split(' ').length;
+        const nextIndex = currentIndex + (e.key === 'ArrowDown' ? columns : -columns);
+        if (items[nextIndex]) {
+          (items[nextIndex] as HTMLElement).focus();
+        }
+        break;
+    }
   }
 
   private lazyLoadImages() {
@@ -556,7 +591,7 @@ private collectionsCollector(assets: Asset[]) {
     }
   }
 
-  private showInfoPane(event: MouseEvent, asset: Asset) {
+  private showInfoPane(event: MouseEvent | FocusEvent, asset: Asset) {
     const target = event.currentTarget as HTMLElement;
     const source = "/asset/grid/" + asset.id + ".png"
     // Remove any existing info pane
@@ -570,7 +605,7 @@ private collectionsCollector(assets: Asset[]) {
     infoPane.innerHTML = `
       <div id="info-pane-top">
         <span>${asset.resolution}</span>
-        <a href="${source}" aria-label="Download this asset" download>
+        <a href="${source}" aria-label="Download this asset" tabindex="-1" download>
           <span id="svg-container">
             <svg height="20" stroke-linejoin="round" viewBox="0 0 16 16" width="20" style="color: currentcolor;"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.75 1V1.75V8.68934L10.7197 6.71967L11.25 6.18934L12.3107 7.25L11.7803 7.78033L8.70711 10.8536C8.31658 11.2441 7.68342 11.2441 7.29289 10.8536L4.21967 7.78033L3.68934 7.25L4.75 6.18934L5.28033 6.71967L7.25 8.68934V1.75V1H8.75ZM13.5 9.25V13.5H2.5V9.25V8.5H1V9.25V14C1 14.5523 1.44771 15 2 15H14C14.5523 15 15 14.5523 15 14V9.25V8.5H13.5V9.25Z" fill="currentColor"></path></svg>
           </span>
@@ -630,22 +665,26 @@ private collectionsCollector(assets: Asset[]) {
       return html`
         <div class="grid">
           ${this.collections[this.collectionRenderer].map((asset) => html`
-        <div class="item${asset.attributes ? " " + asset.attributes[0] : ""}"
+        <div class="item${asset.attributes ? " " + asset.attributes[0] : ""}" tabindex="0"
              @mouseenter="${(e: MouseEvent) => this.showInfoPane(e, asset)}"
-             @mouseleave="${this.hideInfoPane}">
+             @focus="${(e: FocusEvent) => this.showInfoPane(e, asset)}"
+             @blur="${this.hideInfoPane}"
+             @mouseleave="${this.hideInfoPane}"
+             @keydown="${(e: KeyboardEvent) => this.handleGridKeydown(e, asset)}">
               <img data-src="/asset/grid/thumbnail/${asset.id}.webp" 
                    aria-label="Custom Asset for ${asset.title} by ${asset.author}" 
                    @click="${() => this.showOverlay(asset.id)}">
             </div>
           `)}
         </div>
-        <div class="overlay" @click="${this.hideOverlay}">
+        <div class="overlay" @click="${this.hideOverlay}" tabindex="0"
+          @keydown="${(e: KeyboardEvent) => { if (e.key === 'Escape') this.hideOverlay(); }}">
           <div class="content">
             <img src="" alt="Zoomed Image">
             <div class="skeleton"></div>
             <div class="full-overlay">
               <span id="overlay-grid-info"></span>
-              <a title="Download the asset" href="" download>
+              <a title="Download the asset" href="" tabindex="0" download>
                 <span>
                   <svg height="24" stroke-linejoin="round" viewBox="0 0 16 16" width="24" style="color: currentcolor;">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M8.75 1V1.75V8.68934L10.7197 6.71967L11.25 6.18934L12.3107 7.25L11.7803 7.78033L8.70711 10.8536C8.31658 11.2441 7.68342 11.2441 7.29289 10.8536L4.21967 7.78033L3.68934 7.25L4.75 6.18934L5.28033 6.71967L7.25 8.68934V1.75V1H8.75ZM13.5 9.25V13.5H2.5V9.25V8.5H1V9.25V14C1 14.5523 1.44771 15 2 15H14C14.5523 15 15 14.5523 15 14V9.25V8.5H13.5V9.25Z" fill="currentColor"/>

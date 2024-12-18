@@ -52,7 +52,6 @@ export class IndexedDbService {
 
     return new Promise((resolve, reject) => {
       transaction.oncomplete = () => {
-        console.log('All assets have been added to the store.');
         resolve();
       };
       transaction.onerror = () => reject(transaction.error);

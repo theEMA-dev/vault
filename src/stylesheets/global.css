@@ -1,13 +1,15 @@
 @font-face {
-  font-family: "Geist";
-  src: url("https://emirkaynar.com/static/font/Geist.woff2") format("woff2");
+  font-family: 'Geist';
+  src: local('Geist'),
+  url('https://emirkaynar.com/static/font/Geist.woff2') format('woff2');
   font-weight: 100 1000;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Geist Mono";
-  src: url("https://emirkaynar.com/static/font/GeistMono.woff2") format("woff2");
+  font-family: 'Geist Mono';
+  src: local('Geist Mono'),
+  url('https://emirkaynar.com/static/font/GeistMono.woff2') format('woff2');
   font-weight: 100 1000;
   font-style: normal;
   font-display: swap;
@@ -36,6 +38,8 @@ html {
   --hx-text-brand: rgb(255, 1, 73);
   --hx-red-100: rgb(68 13 19);
   --hx-red-500: rgb(255 86 95);
+  --hx-cyan-100: rgb(0, 60, 52);
+  --hx-cyan-500: rgb(20, 203, 183);
 }
 body {
   background-color: var(--hx-background-100);

@@ -26,7 +26,7 @@ export class NavComponent extends LitElement {
     .brand {
       display: flex;
       align-items: center;
-      margin-left: 40px;
+      margin-left: 2.5rem;
       color: var(--hx-text-brand);
     }
     .brand span {
@@ -40,7 +40,7 @@ export class NavComponent extends LitElement {
       align-items: center;
       list-style-type: none;
       margin: 0;
-      margin-right: 28px;
+      margin-right: 1.75rem;
       padding: 0;
       overflow-x: scroll;
     }
@@ -62,11 +62,27 @@ export class NavComponent extends LitElement {
       color: var(--hx-text-100);
     }
     span.ver {
-      margin-left: 12px;
+      margin-left: 8px;
       font-family: var(--hx-font-mono);
       font-size: .75rem;
       font-weight: 400;
       color: var(--hx-text-200);
+    }
+    @media (max-width: 990px) {
+      .brand {
+        margin-left: 2rem
+      }
+      ul {
+        margin-right: 1.25rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .brand {
+        margin-left: 1rem
+      }
+      ul {
+        margin-right: .25rem;
+      }
     }
   `;
 
@@ -85,9 +101,12 @@ export class NavComponent extends LitElement {
       ver = '{"preview": false}';
     }
     const prefs = JSON.parse(ver);
-      const isPreview = prefs.preview;
-    if (!isPreview) {
-      this.shadowRoot?.querySelector('.ver')?.remove();
+    const isPreview = prefs.preview;
+    if (isPreview) {
+      var previewBranding = document.createElement('span');
+      previewBranding.classList.add('ver');
+      previewBranding.textContent = 'PREVIEW';
+      this.shadowRoot?.querySelector('.brand')?.appendChild(previewBranding);
     }
   }
 
@@ -99,9 +118,8 @@ export class NavComponent extends LitElement {
             <g stroke-width="0"/><g stroke-linecap="round" stroke-linejoin="round" stroke="#ffffff" stroke-width="0.128"/><g><path d="M0 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm9 0a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V1zm0 9a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-5z" fill="currentColor"/></g>
           </svg>
           <span>Vault</span>
-          <span class="ver">PREVIEW</span>
         </div>
-        <ul>
+        <ul tabindex="-1">
           <li><a href="/">BROWSE</a></li>
           <li><a href="/collection/map-labs">MAPLABS</a></li>
           <li><a href="/collection/lego">LEGO</a></li>
