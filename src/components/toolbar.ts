@@ -91,6 +91,17 @@ export class ToolbarComponent extends LitElement {
       animation: slideIn 0.3s ease-in-out forwards;
     }
 
+    @keyframes slideOut {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+    }
+
     @keyframes slideIn {
       from {
         transform: translateY(-20px);
@@ -247,6 +258,10 @@ export class ToolbarComponent extends LitElement {
       display: block;
       animation: slideIn 0.2s ease forwards;
     }
+    /* Apply slideOut animation when .closing is added */
+    .toolbar > div.active .dropdown-content.closing {
+      animation: slideOut 0.2s ease forwards;
+    }
     .toolbar > div svg {
       margin-left: 0.75rem;
       transition: transform 0.2s;
@@ -323,7 +338,7 @@ export class ToolbarComponent extends LitElement {
       padding: 1rem;
       background-size: cover;
       background-position: center;
-      opacity: 0.7;
+      filter: brightness(0.7);
       transition: all 0.3s;
     }
 
@@ -334,7 +349,7 @@ export class ToolbarComponent extends LitElement {
     }
 
     .toolbar > div#menu .dropdown-item:hover {
-      opacity: 1;
+      filter: brightness(1);
     }
 
     .menu-browse {
@@ -465,8 +480,67 @@ export class ToolbarComponent extends LitElement {
     }
   `;
 
-  setActiveDropdown(type: string) {
-    this.activeDropdown = this.activeDropdown === type ? "" : type;
+  private getDropdownContentElement(dropdownType: string): Element | null | undefined {
+    if (!dropdownType) return null;
+    // Dropdown triggers have IDs: "toolbar-resolution", "toolbar-aspectRatio", "toolbar-sort", "menu"
+    const selector = `#${dropdownType.startsWith("toolbar-") ? dropdownType : dropdownType === "menu" ? "menu" : `toolbar-${dropdownType}`} .dropdown-content`;
+    return this.shadowRoot?.querySelector(selector);
+  }
+
+  setActiveDropdown(newActiveType: string) { // newActiveType can be "resolution", "aspectRatio", "sortBy", "menu", or ""
+    const previouslyActiveType = this.activeDropdown;
+
+    // If trying to activate a dropdown that is currently in the 'closing' state (e.g., mouse re-entered quickly)
+    if (newActiveType) {
+      const targetDropdownContent = this.getDropdownContentElement(newActiveType);
+      if (targetDropdownContent?.classList.contains('closing')) {
+        targetDropdownContent.classList.remove('closing'); // Cancel closing animation
+        this.activeDropdown = newActiveType; // Set it as active
+        // LitElement will requestUpdate automatically due to property change.
+        return;
+      }
+    }
+
+    // If a different dropdown was active, and it might have been in a 'closing' state,
+    // ensure 'closing' is removed as we are definitively changing state.
+    if (previouslyActiveType && previouslyActiveType !== newActiveType) {
+      const previouslyActiveDropdownContent = this.getDropdownContentElement(previouslyActiveType);
+      previouslyActiveDropdownContent?.classList.remove('closing');
+    }
+
+    // Standard toggle: if clicking the same active one (and it's not empty string), it closes.
+    // Otherwise, the new one opens (or all close if newActiveType is "").
+    if (previouslyActiveType === newActiveType && newActiveType !== "") {
+      this.activeDropdown = ""; // Toggle off
+    } else {
+      this.activeDropdown = newActiveType; // Set new one or clear if newActiveType is ""
+    }
+  }
+
+  handleDropdownMouseLeave(dropdownType: string) {
+    // Only proceed if this specific dropdown is currently the active one
+    if (this.activeDropdown === dropdownType) {
+      const dropdownContentElement = this.getDropdownContentElement(dropdownType);
+
+      if (!dropdownContentElement || dropdownContentElement.classList.contains('closing')) {
+        return; // Already closing or doesn't exist
+      }
+
+      dropdownContentElement.classList.add("closing");
+
+      const animationEndHandler = () => {
+        // Only truly deactivate if it's still supposed to be closing
+        if (dropdownContentElement.classList.contains('closing')) {
+          dropdownContentElement.classList.remove("closing");
+          // And if this dropdown is still the one marked as active (no other dropdown took precedence)
+          if (this.activeDropdown === dropdownType) {
+            this.activeDropdown = "";
+          }
+        }
+      };
+      dropdownContentElement.addEventListener("animationend", animationEndHandler, { once: true });
+      dropdownContentElement.addEventListener("animationcancel", animationEndHandler, { once: true });
+    }
   }
 
   updatePrefs(pref: "toolbarState" | "preview" | "keepFilters") {
@@ -540,7 +614,7 @@ export class ToolbarComponent extends LitElement {
       <div
         class="toolbar ${this.prefs.toolbarState === "float" ? "float" : ""}"
       >
-        <div id="brand">
+        <div id="brand" @click=${() => window.location.href = "/"}>
           <svg
             height="1.25rem"
             viewBox="0 0 16 16"
@@ -568,12 +642,15 @@ export class ToolbarComponent extends LitElement {
           id="toolbar-resolution"
           class="${this.activeDropdown === "resolution" ? "active" : ""}"
           tabindex="0"
-          @click=${() => this.setActiveDropdown("resolution")}
+          aria-expanded="${this.activeDropdown === "resolution"}"
+          aria-controls="resolution-content"
+          @mouseenter=${() => this.setActiveDropdown("resolution")}
+          @mouseleave=${() => this.handleDropdownMouseLeave("resolution")}
           @keydown=${(e: KeyboardEvent) => {
             if (e.key === "Enter") {
-              this.setActiveDropdown("resolution");
+              this.setActiveDropdown("resolution"); // Toggles the dropdown
             } else if (e.key === "Escape") {
-              this.setActiveDropdown("");
+              this.setActiveDropdown(""); // Closes any active dropdown
             }
           }}
         >
@@ -602,7 +679,7 @@ export class ToolbarComponent extends LitElement {
             ></path>
           </svg>
           <div class="dropdown-container">
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="resolution-content">
               ${this.resolutionOptions.map(
                 (option) => html`
                   <div
@@ -640,12 +717,15 @@ export class ToolbarComponent extends LitElement {
           id="toolbar-aspect-ratio"
           class="${this.activeDropdown === "aspectRatio" ? "active" : ""}"
           tabindex="0"
-          @click=${() => this.setActiveDropdown("aspectRatio")}
+          aria-expanded="${this.activeDropdown === "aspectRatio"}"
+          aria-controls="aspectRatio-content"
+          @mouseenter=${() => this.setActiveDropdown("aspectRatio")}
+          @mouseleave=${() => this.handleDropdownMouseLeave("aspectRatio")}
           @keydown=${(e: KeyboardEvent) => {
             if (e.key === "Enter") {
-              this.setActiveDropdown("aspectRatio");
+              this.setActiveDropdown("aspectRatio"); // Toggles the dropdown
             } else if (e.key === "Escape") {
-              this.setActiveDropdown("");
+              this.setActiveDropdown(""); // Closes any active dropdown
             }
           }}
         >
@@ -675,7 +755,7 @@ export class ToolbarComponent extends LitElement {
             ></path>
           </svg>
           <div class="dropdown-container">
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="aspectRatio-content">
               ${this.aspectRatioOptions.map(
                 (option) => html` <div
                   class="dropdown-item"
@@ -711,13 +791,16 @@ export class ToolbarComponent extends LitElement {
           id="toolbar-sort"
           class="${this.activeDropdown === "sortBy" ? "active" : ""}"
           tabindex="0"
-          @click=${() => this.setActiveDropdown("sortBy")}
+          aria-expanded="${this.activeDropdown === "sortBy"}"
+          aria-controls="sortBy-content"
+          @mouseenter=${() => this.setActiveDropdown("sortBy")}
+          @mouseleave=${() => this.handleDropdownMouseLeave("sortBy")}
           @keydown=${(e: KeyboardEvent) => {
-            e.stopPropagation();
+            e.stopPropagation(); // Keep stopPropagation for sort as it was there before
             if (e.key === "Enter") {
-              this.setActiveDropdown("sortBy");
+              this.setActiveDropdown("sortBy"); // Toggles the dropdown
             } else if (e.key === "Escape") {
-              this.setActiveDropdown("");
+              this.setActiveDropdown(""); // Closes any active dropdown
             }
           }}
         >
@@ -744,7 +827,7 @@ export class ToolbarComponent extends LitElement {
             ></path>
           </svg>
           <div class="dropdown-container">
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="sortBy-content">
               ${this.sortOptions.map(
                 (option) => html`
                   <div
@@ -781,8 +864,10 @@ export class ToolbarComponent extends LitElement {
           id="menu"
           class="${this.activeDropdown === "menu" ? "active" : ""}"
           tabindex="0"
+          aria-expanded="${this.activeDropdown === "menu"}"
+          aria-controls="menu-content"
           @mouseenter=${() => this.setActiveDropdown("menu")}
-          @mouseleave=${() => this.setActiveDropdown("")}
+          @mouseleave=${() => this.handleDropdownMouseLeave("menu")}
           @keydown=${(e: KeyboardEvent) => {
             e.stopPropagation();
             if (e.key === "Enter") {
@@ -794,7 +879,7 @@ export class ToolbarComponent extends LitElement {
         >
           <span>Collections</span>
           <div class="dropdown-container">
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="menu-content">
               <div class="dropdown-layout">
                 <a href="/" tabindex="-1">
                   <div class="dropdown-item menu-browse" tabindex="0">
