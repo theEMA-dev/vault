@@ -14,6 +14,9 @@
   font-style: normal;
   font-display: swap;
 }
+* {
+  box-sizing: border-box;
+}
 :root {
   --hx-font-sans: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
   --hx-font-mono: 'Geist Mono', 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
@@ -40,6 +43,9 @@ html {
   --hx-red-500: rgb(255 86 95);
   --hx-cyan-100: rgb(0, 60, 52);
   --hx-cyan-500: rgb(20, 203, 183);
+  --hx-collection-maplabs: rgb(127, 210, 80);
+  --hx-collection-lego: rgb(244, 236, 94);
+  --hx-collection-software: rgb(95, 37, 147);
 }
 body {
   background-color: var(--hx-background-100);
