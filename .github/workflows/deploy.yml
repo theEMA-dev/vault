@@ -39,14 +39,19 @@ jobs:
           # Copy collection HTML files
           mkdir -p ./dist/collection
           cp collection/*.html ./dist/collection/
-          # Copy src assets (images, stylesheets)
-          # Adjust these paths if your actual asset structure within src is different
-          mkdir -p ./dist/src/image
-          cp src/image/*.* ./dist/src/image/
-          mkdir -p ./dist/src/stylesheets
-          cp src/stylesheets/*.* ./dist/src/stylesheets/
+          # Copy src assets (images, stylesheets), maintaining subdirectory structure
+          if [ -d "src/image" ]; then
+            mkdir -p ./dist/src/image
+            cp -r src/image/* ./dist/src/image/
+          fi
+          if [ -d "src/stylesheets" ]; then
+            mkdir -p ./dist/src/stylesheets
+            cp -r src/stylesheets/* ./dist/src/stylesheets/
+          fi
           # Copy top-level asset folder
-          cp -r asset ./dist/
+          if [ -d "asset" ]; then
+            cp -r asset ./dist/
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3 # Removed id: deployment as it's not used in this job
