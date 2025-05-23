@@ -246,6 +246,7 @@ export class ToolbarComponent extends LitElement {
       border-radius: 8px;
       padding: 0.25rem;
       display: none;
+      transform: translateZ(0); /* Promotes to its own compositing layer */
     }
 
     .dropdown-content > span {
