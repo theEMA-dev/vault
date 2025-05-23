@@ -30,13 +30,28 @@ jobs:
         run: bun install
 
       - name: Build project
-        run: bun build src/main.ts --outdir ./dist
+        run: bun build src/main.ts --outdir ./dist --minify # Added --minify
+
+      - name: Prepare dist folder for deployment
+        run: |
+          # Copy root HTML files
+          cp index.html ./dist/
+          # Copy collection HTML files
+          mkdir -p ./dist/collection
+          cp collection/*.html ./dist/collection/
+          # Copy src assets (images, stylesheets)
+          # Adjust these paths if your actual asset structure within src is different
+          mkdir -p ./dist/src/image
+          cp src/image/*.* ./dist/src/image/
+          mkdir -p ./dist/src/stylesheets
+          cp src/stylesheets/*.* ./dist/src/stylesheets/
+          # Copy top-level asset folder
+          cp -r asset ./dist/
 
       - name: Upload artifact
-        id: deployment
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v3 # Removed id: deployment as it's not used in this job
         with:
-          path: .
+          path: ./dist # Changed path to ./dist
   
   deploy:
     environment:
