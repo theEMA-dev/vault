@@ -136,9 +136,9 @@ export class ToolbarComponent extends LitElement {
     }
 
     .toolbar > div#menu {
-      margin-left: auto;
       padding: 0.75rem;
-      margin-right: 0.25rem;
+      margin: .25rem;
+      margin-left: auto;
       border-radius: 8px;
       background: color-mix(in srgb, #fff 5%, transparent);
     }
@@ -183,6 +183,7 @@ export class ToolbarComponent extends LitElement {
     .toolbar > div#toolbar-sort span.selections {
       display: inline-block;
       overflow-x: hidden;
+      overflow-y: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
       width: 124px;
@@ -204,7 +205,7 @@ export class ToolbarComponent extends LitElement {
     }
 
     .toolbar > div > span {
-      font-size: 1rem;
+      font-size: .9rem;
       font-weight: 600;
       font-family: var(--hx-font-sans);
       line-height: 0.9;
@@ -220,6 +221,10 @@ export class ToolbarComponent extends LitElement {
     .toolbar > div#menu span {
       font-weight: 500;
       font-size: 0.9rem;
+    }
+
+    .toolbar > div#menu span.svg {
+      display: none;
     }
 
     .toolbar > div span.selections {
@@ -286,6 +291,16 @@ export class ToolbarComponent extends LitElement {
     .toolbar > div#toolbar-prefs.active svg {
       transform: none;
     }
+    .toolbar > div#menu span.svg {
+      display: none;
+    }
+    .toolbar > div#menu svg {
+      margin: 0;
+      display: flex;
+    }
+    .toolbar > div#menu.active svg {
+      transform: none;
+    }
 
     .dropdown-layout {
       display: grid;
@@ -320,7 +335,7 @@ export class ToolbarComponent extends LitElement {
 
     .toolbar > div#menu .dropdown-container {
       left: auto;
-      right: -4px;
+      right: -4.6px;
       padding-top: 8px;
     }
 
@@ -420,29 +435,45 @@ export class ToolbarComponent extends LitElement {
     /* BREAKPOINTS */
     @media (max-width: 990px) {
       :host {
-        padding: 0.5rem 2rem;
+        padding: 0 2rem;
+      }
+      .toolbar.float {
+        width: calc(100% - 4rem);
+      }
+      .toolbar > div#menu {
+        padding: 0.6rem;
+      }
+      .toolbar > div#brand span {
+        display: none;
+      }
+      .toolbar > div#brand {
+        padding: .85rem;
+      }
+      .toolbar > div#menu span:not(.svg) {
+        display: none;
+      }
+      .toolbar > div#menu span.svg {
+        display: block;
+      }
+      .toolbar > div#menu .dropdown-content {
+        width: calc(100vw - 6rem + 6.6px);
       }
     }
     @media (max-width: 698px) {
       :host {
         padding: 1rem 2rem;
+        padding-top: 0;
       }
       .toolbar {
         width: 100%;
         flex-wrap: wrap;
         justify-content: stretch;
-        border-radius: 12px;
+        border-radius: 0px 0px 12px 12px;
         margin: 0;
-        padding: 0.5rem;
-      }
-      .toolbar.float {
-        width: fit-content;
-        margin: 0 1rem;
       }
       .toolbar > div {
         justify-content: space-between;
         border-right: none;
-        flex-grow: 1;
         border-radius: 8px;
         padding: 0.5rem;
         margin: 0.125rem;
@@ -450,20 +481,13 @@ export class ToolbarComponent extends LitElement {
       .toolbar > div.active {
         background-color: color-mix(in srgb, #fff 5%, transparent);
       }
-      .toolbar > div#toolbar-prefs {
-        justify-content: center;
-      }
-      .toolbar > div#toolbar-prefs svg {
-        width: 1rem;
-        box-sizing: border-box;
-      }
-      .toolbar > div#toolbar-sort {
-        width: calc(100% - 5rem);
-      }
       .toolbar > div#toolbar-prefs .dropdown-container,
       .toolbar > div#toolbar-aspect-ratio .dropdown-container {
         left: auto;
         right: 0;
+      }
+      .toolbar > div#toolbar-resolution {
+        border-left: none;
       }
       .dropdown-layout {
         grid-template-columns: 1fr;
@@ -879,6 +903,9 @@ export class ToolbarComponent extends LitElement {
           }}
         >
           <span>Collections</span>
+          <span class="svg">
+            <svg height="16" stroke-linejoin="round" style="color: currentcolor; --darkreader-inline-color: currentcolor;" viewBox="0 0 16 16" width="16" data-darkreader-inline-color=""><path fill-rule="evenodd" clip-rule="evenodd" d="M0 5.25136V4.2487L0.463236 4.05702L7.71324 1.05702L8 0.938354L8.28676 1.05702L15.5368 4.05702L16 4.2487V5.25136L15.5368 5.44304L8.28676 8.44304L8 8.5617L7.71324 8.44304L0.463236 5.44304L0 5.25136ZM0 8.45825V6.83491L0.536764 7.05702L8 10.1453L15.4632 7.05702L16 6.83491V8.45825L8.28676 11.6499L8 11.7686L7.71324 11.6499L0 8.45825ZM0 11.7083V10.0849L0.536764 10.307L8 13.3953L15.4632 10.307L16 10.0849V11.7083L8.28676 14.8999L8 15.0186L7.71324 14.8999L0 11.7083ZM8 6.93835L2.71154 4.75003L8 2.5617L13.2885 4.75003L8 6.93835Z" fill="currentColor" style="--darkreader-inline-fill: currentColor;" data-darkreader-inline-fill=""></path></svg>
+          </span>
           <div class="dropdown-container">
             <div class="dropdown-content" id="menu-content">
               <div class="dropdown-layout">

@@ -4,11 +4,13 @@
   "type": "module",
   "scripts": {
     "build": "bun build src/main.ts --outdir ./dist",
-    "dev": "bun run build && bun run serve -p 25420",
-    "dev-w": "nodemon --watch src --watch asset --watch index.html --ext js,ts,html,css --exec 'bun build src/main.ts --outdir ./dist && bun run serve -p 25420'"
+    "prepare-dist": "cpx \"index.html\" \"./dist\" && cpx \"collection/**/*.*\" \"./dist/collection\" && cpx \"src/image/**/*.*\" \"./dist/src/image\" && cpx \"src/stylesheets/**/*.*\" \"./dist/src/stylesheets\" && cpx \"asset/**/*.*\" \"./dist/asset\"",
+    "dev": "bun run build && bun run prepare-dist && bun run serve -p 25420 ./dist",
+    "dev-w": "nodemon --watch src --watch asset --watch index.html --ext js,ts,html,css --exec 'bun run build && bun run prepare-dist && bun run serve -p 25420 ./dist'"
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "cpx": "^1.5.0",
     "nodemon": "^2.0.15"
   },
   "peerDependencies": {
